@@ -1,4 +1,5 @@
 import java.lang.Math;
+import java.io.*;
 import IO.*;
 class Trapezoidal {
   private double x1;
@@ -231,10 +232,11 @@ class PaaTP {
       int n = Integer.parseInt(st);
       //System.out.println(solution);
       trapezoidais = new Trapezoidal [n];
+      solutionVector = new int [n];
       for(int i = 0;(st = br.readLine()) != null; i++) {
         System.out.println(st);
         String [] tmp = st.split(" ");
-        trapezoidais[i] = new Trapezoidal(Double.parseDouble(tmp[0]),Double.parseDouble(tmp[0]) + Double.parseDouble(tmp[1]) ,Double.parseDouble(tmp[2]));     
+        trapezoidais[i] = new Trapezoidal(Double.parseDouble(tmp[0]),Double.parseDouble(tmp[1]) ,Double.parseDouble(tmp[2]));     
         //System.out.println(trapezoidais[i].getX2());
       }
 
