@@ -265,7 +265,17 @@ class RecorteDePecas {
       }
       g.drawLine(ultimaPosicaoInferior + parteSuperiorTemporaria, -50, ultimaPosicaoSuperior + parteInferiorTemporaria, 150, "RED", 0.003);
   }
-	
+  
+  
+  /**
+   * Metodo que realiza o algoritmo de branch and bound para realizar o calculo de desperdicio
+   * @param int n - Tamanho do vetor de pecas
+   * @param int [] x - vetor de pecas
+   * @param boolean [] utilizada - posicoes do vetor de pecas utilizados
+   * @param int cont - contador de controle para o algoritmo
+   * @param double desperdicioTemporario - valor maximo para comparacao
+   */
+  
   public static void branchAndBound(int n, int [] x, boolean [] utilizada, int cont, double desperdicioTemporario) {
 	  int aux = -1;
 	  if( n == cont ) {
