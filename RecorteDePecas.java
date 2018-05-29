@@ -9,7 +9,9 @@
 /* Bibliotecas Utilizadas */
 import java.lang.Math; /* Calculo de Potencias e Raizes */
 import java.io.*;
+import java.util.Date;
 import IO.*; /* Biblioteca Grafica @author: Theldo Cruz Franqueira */
+
 
 class Trapezoidal {
   private double x1;
@@ -187,13 +189,13 @@ class RecorteDePecas {
    * @libraryAuthor: Theldo Cruz Franqueira
    */
 
-  public static void plotarPecas() {
+  public static void gerarGrafico() {
     
     IOGraphics g = new IOGraphics("PAA", 2000, 1000);
     double parteSuperiorTemporaria = 0.0, parteInferiorTemporaria = 0.0;
     double ultimaPosicaoSuperior = -500.0, ultimaPosicaoInferior = -500.0;
     double x1,x2,x3;
-	g.drawLine(ultimaPosicaoInferior, -50, ultimaPosicaoSuperior, 150, "BLACK", 0.003);
+	g.drawLine(ultimaPosicaoInferior, -50, ultimaPosicaoSuperior, 150, "RED", 0.003);
     for(int i = 0; i < vetorSolucao.length; i++) {
       x1 = trapezoidais[vetorSolucao[i]].getX1() * 8;
       x2 = trapezoidais[vetorSolucao[i]].getX2() * 8;
@@ -203,19 +205,19 @@ class RecorteDePecas {
           if(x3 <= parteSuperiorTemporaria) { 
             //System.out.println("Passo if 1");
             //botar Trapezoidal ligado em Cima.
-            g.drawLine(ultimaPosicaoSuperior, 100, x1 + ultimaPosicaoSuperior, 100, "BLACK", 0.003);
-            g.drawLine(ultimaPosicaoSuperior - x3, 0, ultimaPosicaoSuperior + x2, 0, "BLACK", 0.003);
-            g.drawLine(ultimaPosicaoSuperior - x3, 0, ultimaPosicaoSuperior, 100, "BLACK", 0.003);
-            g.drawLine(ultimaPosicaoSuperior + x2 , 0, x1 + ultimaPosicaoSuperior , 100, "BLACK", 0.003);
+            g.drawLine(ultimaPosicaoSuperior, 100, x1 + ultimaPosicaoSuperior, 100, "BLUE", 0.003);
+            g.drawLine(ultimaPosicaoSuperior - x3, 0, ultimaPosicaoSuperior + x2, 0, "BLUE", 0.003);
+            g.drawLine(ultimaPosicaoSuperior - x3, 0, ultimaPosicaoSuperior, 100, "BLUE", 0.003);
+            g.drawLine(ultimaPosicaoSuperior + x2 , 0, x1 + ultimaPosicaoSuperior , 100, "BLUE", 0.003);
             ultimaPosicaoSuperior = ultimaPosicaoSuperior + x1;
             ultimaPosicaoInferior = ultimaPosicaoSuperior + x2 - x1;
           }else{
             //System.out.println("Passo if 2");
             //botar Trapezoidal Ligado emBaixo.
-            g.drawLine(ultimaPosicaoInferior + x3, 100, x1 + x3 + ultimaPosicaoInferior, 100, "BLACK", 0.003);
-            g.drawLine(ultimaPosicaoInferior, 0, ultimaPosicaoInferior + x2 + x3, 0, "BLACK", 0.003);
-            g.drawLine(ultimaPosicaoInferior, 0,ultimaPosicaoInferior + x3, 100, "BLACK", 0.003);
-            g.drawLine(ultimaPosicaoInferior + x2 + x3 , 0, x1 + x3 + ultimaPosicaoInferior , 100, "BLACK", 0.003);
+            g.drawLine(ultimaPosicaoInferior + x3, 100, x1 + x3 + ultimaPosicaoInferior, 100, "BLUE", 0.003);
+            g.drawLine(ultimaPosicaoInferior, 0, ultimaPosicaoInferior + x2 + x3, 0, "BLUE", 0.003);
+            g.drawLine(ultimaPosicaoInferior, 0,ultimaPosicaoInferior + x3, 100, "BLUE", 0.003);
+            g.drawLine(ultimaPosicaoInferior + x2 + x3 , 0, x1 + x3 + ultimaPosicaoInferior , 100, "BLUE", 0.003);
             ultimaPosicaoSuperior = ultimaPosicaoInferior + x1 + x3;
             ultimaPosicaoInferior = ultimaPosicaoSuperior + x2 - x1;
           }       
@@ -223,19 +225,19 @@ class RecorteDePecas {
           if(x3 <= parteInferiorTemporaria) { 
             //System.out.println("Passo if 3");
             //botar Trapezoidal Ligado emBaixo.
-            g.drawLine(ultimaPosicaoInferior - x3, 100, x1 - x3 + ultimaPosicaoInferior, 100, "BLACK", 0.003);
-            g.drawLine(ultimaPosicaoInferior, 0, ultimaPosicaoInferior + x2 - x3, 0, "BLACK", 0.003);
-            g.drawLine(ultimaPosicaoInferior, 0, ultimaPosicaoInferior - x3, 100, "BLACK", 0.003);
-            g.drawLine(ultimaPosicaoInferior + x2 - x3 , 0, x1 - x3 + ultimaPosicaoInferior, 100, "BLACK", 0.003);
+            g.drawLine(ultimaPosicaoInferior - x3, 100, x1 - x3 + ultimaPosicaoInferior, 100, "BLUE", 0.003);
+            g.drawLine(ultimaPosicaoInferior, 0, ultimaPosicaoInferior + x2 - x3, 0, "BLUE", 0.003);
+            g.drawLine(ultimaPosicaoInferior, 0, ultimaPosicaoInferior - x3, 100, "BLUE", 0.003);
+            g.drawLine(ultimaPosicaoInferior + x2 - x3 , 0, x1 - x3 + ultimaPosicaoInferior, 100, "BLUE", 0.003);
             ultimaPosicaoSuperior = ultimaPosicaoInferior + x1 - x3;
             ultimaPosicaoInferior = ultimaPosicaoSuperior + x2 - x1;
           }else{
             //System.out.println("Passo if 4");
             //botar Trapezoidal ligado emCima.
-            g.drawLine(ultimaPosicaoSuperior, 100, x1 + ultimaPosicaoSuperior, 100, "BLACK", 0.003);
-            g.drawLine(ultimaPosicaoSuperior + x3, 0, ultimaPosicaoSuperior + x2, 0, "BLACK", 0.003);
-            g.drawLine(ultimaPosicaoSuperior + x3, 0, ultimaPosicaoSuperior, 100, "BLACK", 0.003);
-            g.drawLine(ultimaPosicaoSuperior + x2, 0, x1 + ultimaPosicaoSuperior , 100, "BLACK", 0.003);
+            g.drawLine(ultimaPosicaoSuperior, 100, x1 + ultimaPosicaoSuperior, 100, "BLUE", 0.003);
+            g.drawLine(ultimaPosicaoSuperior + x3, 0, ultimaPosicaoSuperior + x2, 0, "BLUE", 0.003);
+            g.drawLine(ultimaPosicaoSuperior + x3, 0, ultimaPosicaoSuperior, 100, "BLUE", 0.003);
+            g.drawLine(ultimaPosicaoSuperior + x2, 0, x1 + ultimaPosicaoSuperior , 100, "BLUE", 0.003);
             ultimaPosicaoSuperior = ultimaPosicaoSuperior + x1;
             ultimaPosicaoInferior = ultimaPosicaoSuperior + x2 - x1;
           }
@@ -261,7 +263,7 @@ class RecorteDePecas {
         }
         
       }
-      g.drawLine(ultimaPosicaoInferior + parteSuperiorTemporaria, -50, ultimaPosicaoSuperior + parteInferiorTemporaria, 150, "BLACK", 0.003);
+      g.drawLine(ultimaPosicaoInferior + parteSuperiorTemporaria, -50, ultimaPosicaoSuperior + parteInferiorTemporaria, 150, "RED", 0.003);
   }
 	
   public static void branchAndBound(int n, int [] x, boolean [] utilizada, int cont, double desperdicioTemporario) {
@@ -291,11 +293,21 @@ class RecorteDePecas {
       }
   }
 
+
+  /**
+   * Funcao para retornar tempo do sistema
+   */
+
+   public static long now(){
+     return new Date().getTime();
+   }
+
   public static void main(String[] args) {
     solucao = Double.MAX_VALUE;
     try {
       /* Parse da entrada */
-      File file = new File("Test.txt");
+      String nomeArquivo = IO.readString("Informe o Nome do Arquivo e sua extensao (Ex. Test1.txt): ");
+      File file = new File(nomeArquivo);
       BufferedReader br = new BufferedReader(new FileReader(file));
       String st;
       st = br.readLine();
@@ -322,39 +334,39 @@ class RecorteDePecas {
         pass2[i] = false;
       }
 
-      /* Realizando Permutacao com pecas e melhor soulicao de acordo com permutacao */
-      long begin = System.currentTimeMillis(); /* Tempo do sistema antes da permutacao */
+      /* Realizando Permutacao com pecas e melhor solucao de acordo com permutacao */
+      long begin = now (); /* Tempo do sistema antes da permutacao */
       permutacao(n, x, pass1, 0);
-      long end = System.currentTimeMillis(); /* Tempo do sistema apos permutacao */
-      System.out.println("Tempo de execução: " + (end - begin)/1000);
+      long end = now (); /* Tempo do sistema apos permutacao */
+      System.out.println("Tempo de execução: " + (end - begin)/1000.0 + " /s");
       System.out.println("Melhor solução do problema usando permutação: " + solucao);
       //digite enter para blotar
-      plotarPecas();
+      gerarGrafico();
       
-      IO.readString("Aperte Enter para continuar");
+      IO.pause("Aperte ENTER para solucao com Branch and Bound");
       int aux = -1;
       double desperdicioTemporario = Double.MAX_VALUE;
       for(int i = 0; i < n; i++) {		
-		int [] auxVector = new int [1];
-		auxVector[0] = y[i]; // peça que a gente quer colocar
-		double desperdicio = calcularDesperdicio(auxVector);
-		
-		if(desperdicioTemporario > desperdicio) {
-				desperdicioTemporario = desperdicio;
-				aux = i;
-		}			
-	  }
-	  pass2[aux] = true;
-	  y[0] = aux;
-	  
-      /* Realizando Branch and Bound com pecas e melhor soulicao de acordo com permutacao */
-      begin = System.currentTimeMillis(); /* Tempo do sistema antes da permutacao */
+        int [] auxVector = new int [1];
+        auxVector[0] = y[i]; // peça que a gente quer colocar
+        double desperdicio = calcularDesperdicio(auxVector);
+        
+        if(desperdicioTemporario > desperdicio) {
+            desperdicioTemporario = desperdicio;
+            aux = i;
+        }			
+      }
+      pass2[aux] = true;
+      y[0] = aux;
+        
+      /* Realizando Branch and Bound com pecas e melhor solucao */
+      begin = now (); /* Tempo do sistema antes do BranchAndBound */
       branchAndBound(n, y, pass2, 1,Double.MAX_VALUE);
-      end = System.currentTimeMillis(); /* Tempo do sistema apos Branch and Bound */
-      System.out.println("Tempo de execução: " + (end - begin)/1000);
+      end = now(); /* Tempo do sistema apos BranchAndBound */
+      System.out.println("Tempo de execução: " + (end - begin)/1000.0 + " /s");
       System.out.println("Melhor solução do problema usando Branch and Bound: " + solucao);
       //digite enter para blotar
-      plotarPecas();
+      gerarGrafico();
       
     }catch(IOException ex) {
       ex.printStackTrace();

@@ -167,19 +167,19 @@ class PaaTP {
           if(x3 <= tmp1) { 
             //System.out.println("Passo if 1");
             //botar Trapezoidal ligado emCima.
-            g.drawLine(lastPos1, 100, x1 + lastPos1, 100, "BLACK", 0.003); // x3 + lastPos1 ate x1 + x3 + lastPos1
-            g.drawLine(lastPos1 - x3, 0, lastPos1 + x1 + x2, 0, "BLACK", 0.003);    //x3+x2
-            g.drawLine(lastPos1 - x3, 0, lastPos1, 100, "BLACK", 0.003); //x3 <--> x1
-            g.drawLine(lastPos1 + x1 + x2 , 0, x1 + lastPos1 , 100, "BLACK", 0.003);  //x1 <--> x2
+            g.drawLine(lastPos1, 100, x1 + lastPos1, 100, "BLUE", 0.003); // x3 + lastPos1 ate x1 + x3 + lastPos1
+            g.drawLine(lastPos1 - x3, 0, lastPos1 + x1 + x2, 0, "BLUE", 0.003);    //x3+x2
+            g.drawLine(lastPos1 - x3, 0, lastPos1, 100, "BLUE", 0.003); //x3 <--> x1
+            g.drawLine(lastPos1 + x1 + x2 , 0, x1 + lastPos1 , 100, "BLUE", 0.003);  //x1 <--> x2
             lastPos1 = lastPos1 + x1;
             lastPos2 = lastPos1 + x2;
           }else{
             //System.out.println("Passo if 2");
             //botar Trapezoidal Ligado emBaixo.
-            g.drawLine(lastPos2 + x3, 100, x1 + x3 + lastPos2, 100, "BLACK", 0.003); // x3 + lastPos1 ate x1 + x3 + lastPos1
-            g.drawLine(lastPos2, 0, lastPos2 + x1 + x2 + x3, 0, "BLACK", 0.003);    //x3+x2
-            g.drawLine(lastPos2, 0,lastPos2 + x3, 100, "BLACK", 0.003); //x3 <--> x1
-            g.drawLine(lastPos2 + x1 + x2 + x3 , 0, x1 + x3 + lastPos2 , 100, "BLACK", 0.003);  //x1 <--> x2
+            g.drawLine(lastPos2 + x3, 100, x1 + x3 + lastPos2, 100, "BLUE", 0.003); // x3 + lastPos1 ate x1 + x3 + lastPos1
+            g.drawLine(lastPos2, 0, lastPos2 + x1 + x2 + x3, 0, "BLUE", 0.003);    //x3+x2
+            g.drawLine(lastPos2, 0,lastPos2 + x3, 100, "BLUE", 0.003); //x3 <--> x1
+            g.drawLine(lastPos2 + x1 + x2 + x3 , 0, x1 + x3 + lastPos2 , 100, "BLUE", 0.003);  //x1 <--> x2
             lastPos1 = lastPos2 + x1 + x3;
             lastPos2 = lastPos1 + x2;
           }       
@@ -187,19 +187,19 @@ class PaaTP {
           if(x3 <= tmp2) { 
             //System.out.println("Passo if 3");
             //botar Trapezoidal Ligado emBaixo.
-            g.drawLine(lastPos2 - x3, 100, x1 - x3 + lastPos2, 100, "BLACK", 0.003); // x3 + lastPos1 ate x1 + x3 + lastPos1
-            g.drawLine(lastPos2, 0, lastPos2 + x1 + x2 - x3, 0, "BLACK", 0.003);    //x3+x2
-            g.drawLine(lastPos2, 0, lastPos2 - x3, 100, "BLACK", 0.003); //x3 <--> x1
-            g.drawLine(lastPos2 + x1 + x2 - x3 , 0, x1 - x3 + lastPos2, 100, "BLACK", 0.003);  //x1 <--> x2
+            g.drawLine(lastPos2 - x3, 100, x1 - x3 + lastPos2, 100, "BLUE", 0.003); // x3 + lastPos1 ate x1 + x3 + lastPos1
+            g.drawLine(lastPos2, 0, lastPos2 + x1 + x2 - x3, 0, "BLUE", 0.003);    //x3+x2
+            g.drawLine(lastPos2, 0, lastPos2 - x3, 100, "BLUE", 0.003); //x3 <--> x1
+            g.drawLine(lastPos2 + x1 + x2 - x3 , 0, x1 - x3 + lastPos2, 100, "BLUE", 0.003);  //x1 <--> x2
             lastPos1 = lastPos2 + x1 - x3;
             lastPos2 = lastPos1 + x2;
           }else{
             //System.out.println("Passo if 4");
             //botar Trapezoidal ligado emCima.
-            g.drawLine(lastPos1, 100, x1 + lastPos1, 100, "BLACK", 0.003); // x3 + lastPos1 ate x1 + x3 + lastPos1
-            g.drawLine(lastPos1 + x3, 0, lastPos1 + x1 + x2, 0, "BLACK", 0.003);    //x3+x2
-            g.drawLine(lastPos1 + x3, 0, lastPos1, 100, "BLACK", 0.003); //x3 <--> x1
-            g.drawLine(lastPos1 + x1 + x2, 0, x1 + lastPos1 , 100, "BLACK", 0.003);  //x1 <--> x2
+            g.drawLine(lastPos1, 100, x1 + lastPos1, 100, "BLUE", 0.003); // x3 + lastPos1 ate x1 + x3 + lastPos1
+            g.drawLine(lastPos1 + x3, 0, lastPos1 + x1 + x2, 0, "BLUE", 0.003);    //x3+x2
+            g.drawLine(lastPos1 + x3, 0, lastPos1, 100, "BLUE", 0.003); //x3 <--> x1
+            g.drawLine(lastPos1 + x1 + x2, 0, x1 + lastPos1 , 100, "BLUE", 0.003);  //x1 <--> x2
             lastPos1 = lastPos1 + x1;
             lastPos2 = lastPos1 + x2;
           }
