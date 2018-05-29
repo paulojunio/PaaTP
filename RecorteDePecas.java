@@ -189,11 +189,11 @@ class RecorteDePecas {
 
   public static void plotarPecas() {
     
-    IOGraphics g = new IOGraphics("PAA", 1000, 500);
+    IOGraphics g = new IOGraphics("PAA", 2000, 1000);
     double parteSuperiorTemporaria = 0.0, parteInferiorTemporaria = 0.0;
     double ultimaPosicaoSuperior = -500.0, ultimaPosicaoInferior = -500.0;
     double x1,x2,x3;
-
+	g.drawLine(ultimaPosicaoInferior, -50, ultimaPosicaoSuperior, 150, "BLACK", 0.003);
     for(int i = 0; i < vetorSolucao.length; i++) {
       x1 = trapezoidais[vetorSolucao[i]].getX1() * 8;
       x2 = trapezoidais[vetorSolucao[i]].getX2() * 8;
@@ -261,8 +261,35 @@ class RecorteDePecas {
         }
         
       }
+      g.drawLine(ultimaPosicaoInferior + parteSuperiorTemporaria, -50, ultimaPosicaoSuperior + parteInferiorTemporaria, 150, "BLACK", 0.003);
   }
-
+	
+  public static void branchAndBound(int n, int [] x, boolean [] utilizada, int cont, double desperdicioTemporario) {
+	  int aux = -1;
+	  if( n == cont ) {
+		solucao = calcularDesperdicio(x);
+		for(int i = 0; i < vetorSolucao.length;i++) 
+			vetorSolucao[i] = x[i];
+	  }else{
+		for(int i = 0; i < n; i++) {
+			
+			if(utilizada[i] != true) {
+				int [] auxVector = new int [2];
+				auxVector[0] = x[cont - 1]; //Ultima peça
+				auxVector[1] = x[i]; // peça que a gente que colocar
+				double desperdicio = calcularDesperdicio(auxVector);
+				
+				if(desperdicioTemporario > desperdicio) {
+						desperdicioTemporario = desperdicio;
+						aux = i;
+				}
+			}
+		}	
+		utilizada[aux] = true;
+		x[cont] = aux;
+		branchAndBound(n,x,utilizada,cont + 1,Double.MAX_VALUE);
+      }
+  }
 
   public static void main(String[] args) {
     solucao = Double.MAX_VALUE;
@@ -284,21 +311,51 @@ class RecorteDePecas {
       }
       
       int x [] = new int [n]; /* Vetor de pecas */
-      boolean pass [] = new boolean[n]; /* posicoes booleanas do vetor de pecas */
+      int y [] = new int [n]; /* Vetor de pecas */
+      boolean pass1 [] = new boolean[n]; /* posicoes booleanas do vetor de pecas */
+      boolean pass2 [] = new boolean[n]; /* posicoes booleanas do vetor de pecas */
       /* inicializando vetores */
       for(int i = 0; i < n; i++) {
         x[i] = 0;
-        pass[i] = false;
+        y[i] = 0;
+        pass1[i] = false;
+        pass2[i] = false;
       }
 
       /* Realizando Permutacao com pecas e melhor soulicao de acordo com permutacao */
       long begin = System.currentTimeMillis(); /* Tempo do sistema antes da permutacao */
-      permutacao(n, x, pass, 0);
+      permutacao(n, x, pass1, 0);
       long end = System.currentTimeMillis(); /* Tempo do sistema apos permutacao */
-      System.out.println("Tempo de execução: " + (end - begin));
-      System.out.println("Melhor solução do problema: " + solucao);
+      System.out.println("Tempo de execução: " + (end - begin)/1000);
+      System.out.println("Melhor solução do problema usando permutação: " + solucao);
       //digite enter para blotar
       plotarPecas();
+      
+      IO.readString("Aperte Enter para continuar");
+      int aux = -1;
+      double desperdicioTemporario = Double.MAX_VALUE;
+      for(int i = 0; i < n; i++) {		
+		int [] auxVector = new int [1];
+		auxVector[0] = y[i]; // peça que a gente quer colocar
+		double desperdicio = calcularDesperdicio(auxVector);
+		
+		if(desperdicioTemporario > desperdicio) {
+				desperdicioTemporario = desperdicio;
+				aux = i;
+		}			
+	  }
+	  pass2[aux] = true;
+	  y[0] = aux;
+	  
+      /* Realizando Branch and Bound com pecas e melhor soulicao de acordo com permutacao */
+      begin = System.currentTimeMillis(); /* Tempo do sistema antes da permutacao */
+      branchAndBound(n, y, pass2, 1,Double.MAX_VALUE);
+      end = System.currentTimeMillis(); /* Tempo do sistema apos Branch and Bound */
+      System.out.println("Tempo de execução: " + (end - begin)/1000);
+      System.out.println("Melhor solução do problema usando Branch and Bound: " + solucao);
+      //digite enter para blotar
+      plotarPecas();
+      
     }catch(IOException ex) {
       ex.printStackTrace();
     }   
