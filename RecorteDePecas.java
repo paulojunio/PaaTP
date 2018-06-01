@@ -83,13 +83,13 @@ class RecorteDePecas {
    * @param int [] x - Arranjo com pecas
    */
   
-  public static double calcularDesperdicio(int [] x) {
+  public static double calcularDesperdicio(int [] x,int tamanho) {
     double parteSuperiorTemporaria = 0.0, parteInferiorTemporaria = 0.0;
     double desperdicio = 0.0;
     double x1,x2,x3;
     double ladoTriangulo1,ladoTriangulo2;
-    for(int i = 0; i <= x.length; i++) {
-      if(i != x.length ) {
+    for(int i = 0; i <= tamanho; i++) {
+      if(i != tamanho ) {
         x3 = trapezoidais[x[i]].getX3();
         if(parteSuperiorTemporaria >= parteInferiorTemporaria) {
           x3 = x3 * -1;
@@ -165,7 +165,7 @@ class RecorteDePecas {
 
   public static void permutacao (int n , int [] x , boolean [] pass , int cont){
    if(n == cont) {
-     double desperdicio = calcularDesperdicio(x);
+     double desperdicio = calcularDesperdicio(x,cont);
      //System.out.println("solucao " + desperdicio);
      if(desperdicio < solucao) {
       solucao = desperdicio;
@@ -178,6 +178,42 @@ class RecorteDePecas {
            pass[i] = true;
            x[cont] = i;
            permutacao(n, x, pass, cont+1);
+           pass[i] = false;
+         }
+       }
+     }
+  }
+  
+  /**
+   * Metodo que realiza o algoritmo de permutacao com uma alteracao usando um algoritmo de branch and bound para realizar o calculo de desperdicio
+   * @param int n - tamanho do vetor x
+   * @param int [] x - Arranjo de pecas que sera permutado
+   * @param boolean [] pass - Posicoes que passarm na permutacao
+   * @param int cont - controle de permutacao
+   */
+
+  public static void branchAndBound(int n , int [] x , boolean [] pass , int cont){
+   double desperdicio = Double.MAX_VALUE;
+   double desperdicioTemporario;
+   if(n == cont) {
+     desperdicio = calcularDesperdicio(x,cont);
+     if(desperdicio < solucao) {
+      solucao = desperdicio;
+      for(int i = 0; i < vetorSolucao.length;i++) 
+        vetorSolucao[i] = x[i];
+     }     
+     }else{
+       for(int i = 0; i < n; i++) {
+         if(!pass[i]) {
+           
+           pass[i] = true;
+           x[cont] = i;
+           desperdicioTemporario = calcularDesperdicio(x,cont+1);
+           if(desperdicioTemporario < desperdicio) {
+            desperdicio = desperdicioTemporario;
+            branchAndBound(n, x, pass, cont+1);
+            
+           }
            pass[i] = false;
          }
        }
@@ -276,10 +312,10 @@ class RecorteDePecas {
    * @param double desperdicioTemporario - valor maximo para comparacao
    */
   
-  public static void branchAndBound(int n, int [] x, boolean [] utilizada, int cont, double desperdicioTemporario) {
+  /*public static void branchAndBound(int n, int [] x, boolean [] utilizada, int cont, double desperdicioTemporario) {
 	  int aux = -1;
 	  if( n == cont ) {
-		solucao = calcularDesperdicio(x);
+		solucao = calcularDesperdicio(x,cont);
 		for(int i = 0; i < vetorSolucao.length;i++) 
 			vetorSolucao[i] = x[i];
 	  }else{
@@ -289,7 +325,7 @@ class RecorteDePecas {
 				int [] auxVector = new int [2];
 				auxVector[0] = x[cont - 1]; //Ultima peça
 				auxVector[1] = x[i]; // peça que a gente que colocar
-				double desperdicio = calcularDesperdicio(auxVector);
+				double desperdicio = calcularDesperdicio(auxVector,2);
 				
 				if(desperdicioTemporario > desperdicio) {
 						desperdicioTemporario = desperdicio;
@@ -301,7 +337,7 @@ class RecorteDePecas {
 		x[cont] = aux;
 		branchAndBound(n,x,utilizada,cont + 1,Double.MAX_VALUE);
       }
-  }
+  }*/
 
 
   /**
@@ -354,12 +390,13 @@ class RecorteDePecas {
       gerarGrafico();
       
       IO.pause("Aperte ENTER para solucao com Branch and Bound");
-      int aux = -1;
+      
+      /*int aux = -1;
       double desperdicioTemporario = Double.MAX_VALUE;
       for(int i = 0; i < n; i++) {		
         int [] auxVector = new int [1];
         auxVector[0] = y[i]; // peça que a gente quer colocar
-        double desperdicio = calcularDesperdicio(auxVector);
+        double desperdicio = calcularDesperdicio(auxVector,1);
         
         if(desperdicioTemporario > desperdicio) {
             desperdicioTemporario = desperdicio;
@@ -367,11 +404,11 @@ class RecorteDePecas {
         }			
       }
       pass2[aux] = true;
-      y[0] = aux;
+      y[0] = aux;*/
         
       /* Realizando Branch and Bound com pecas e melhor solucao */
       begin = now (); /* Tempo do sistema antes do BranchAndBound */
-      branchAndBound(n, y, pass2, 1,Double.MAX_VALUE);
+      branchAndBound(n, y, pass2, 0);
       end = now(); /* Tempo do sistema apos BranchAndBound */
       System.out.println("Tempo de execução: " + (end - begin)/1000.0 + " /s");
       System.out.println("Melhor solução do problema usando Branch and Bound: " + solucao);
