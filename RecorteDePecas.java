@@ -51,7 +51,7 @@ class RecorteDePecas {
   static double solucao;
   static int [] vetorSolucao;
   
-  /**
+ /**
    * Funcao para calcular o lado de um triangulo retangulo pela formula de pitagoras
    * @param double x - Tamanho do lado
    */
@@ -65,9 +65,9 @@ class RecorteDePecas {
 
   /**
    * Funcao para calcular area do triangulo de desperdicio utilizando a formula de semi perimetros
-   * @param int x - ponto x do triangulo
-   * @param int y - ponto y do triangulo
-   * @param int z - ponto z do triangulo
+   * @param int x - lado x do triangulo
+   * @param int y - lado y do triangulo
+   * @param int z - lado z do triangulo
    */
   
   public static double calcularArea (double x, double y, double z) {
@@ -80,7 +80,7 @@ class RecorteDePecas {
 
   /**
    * Funcao para calcular desperdicio total presente no array de pecas
-   * @param int [] x - Arranjo com pecas
+   * @param int [] x - Indice do arranjo com pecas
    */
   
   public static double calcularDesperdicio(int [] x,int tamanho) {
@@ -158,8 +158,8 @@ class RecorteDePecas {
   /**
    * Funcao para realizar a permutacao de todas as possibiliades de arranjo de pecas
    * @param int n - tamanho do vetor x
-   * @param int [] x - Arranjo de pecas que sera permutado
-   * @param boolean [] pass - Posicoes que passarm na permutacao
+   * @param int [] x - Indices do arranjo de pecas que sera permutado
+   * @param boolean [] pass - Posicoes que passaram na permutacao
    * @param int cont - controle de permutacao
    */
 
@@ -185,10 +185,11 @@ class RecorteDePecas {
   }
   
   /**
-   * Metodo que realiza o algoritmo de permutacao com uma alteracao usando um algoritmo de branch and bound para realizar o calculo de desperdicio
+   * Metodo que realiza o algoritmo de permutacao com uma alteracao usando um
+   *  algoritmo de branch and bound para realizar o calculo de desperdicio
    * @param int n - tamanho do vetor x
-   * @param int [] x - Arranjo de pecas que sera permutado
-   * @param boolean [] pass - Posicoes que passarm na permutacao
+   * @param int [] x - Indices do arranjo de pecas que sera permutado
+   * @param boolean [] pass - Posicoes que passaram na permutacao
    * @param int cont - controle de permutacao
    */
 
@@ -222,13 +223,13 @@ class RecorteDePecas {
   }
 
   /**
-   * Funcao para plotar o grafico de pecas utilizando biblioteca IO
+   * Funcao para criar o grafico de pecas utilizando a biblioteca IO.IOGraphics
    * @libraryAuthor: Theldo Cruz Franqueira
    */
 
   public static void gerarGrafico() {
     
-    IOGraphics g = new IOGraphics("PAA", 2000, 1000);
+    IOGraphics g = new IOGraphics("Recorte De Pecas", 1000, 500);
     double parteSuperiorTemporaria = 0.0, parteInferiorTemporaria = 0.0;
     double ultimaPosicaoSuperior = -500.0, ultimaPosicaoInferior = -500.0;
     double x1,x2,x3;
@@ -343,6 +344,7 @@ class RecorteDePecas {
 
   /**
    * Funcao para retornar tempo do sistema
+   * @return long - tempo do sistema
    */
 
    public static long now(){
@@ -369,8 +371,8 @@ class RecorteDePecas {
         //System.out.println(trapezoidais[i].getX2());
       }
       
-      int x [] = new int [n]; /* Vetor de pecas */
-      int y [] = new int [n]; /* Vetor de pecas */
+      int x [] = new int [n]; /* Indices do Vetor de pecas */
+      int y [] = new int [n]; /* Indices do Vetor de pecas */
       boolean pass1 [] = new boolean[n]; /* posicoes booleanas do vetor de pecas */
       boolean pass2 [] = new boolean[n]; /* posicoes booleanas do vetor de pecas */
       /* inicializando vetores */
