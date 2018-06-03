@@ -394,20 +394,6 @@ class RecorteDePecas {
       
       IO.pause("Aperte ENTER para solucao com Branch and Bound");
       
-      /*int aux = -1;
-      double desperdicioTemporario = Double.MAX_VALUE;
-      for(int i = 0; i < n; i++) {		
-        int [] auxVector = new int [1];
-        auxVector[0] = y[i]; // peça que a gente quer colocar
-        double desperdicio = calcularDesperdicio(auxVector,1);
-        
-        if(desperdicioTemporario > desperdicio) {
-            desperdicioTemporario = desperdicio;
-            aux = i;
-        }			
-      }
-      pass2[aux] = true;
-      y[0] = aux;*/
       solucao = Double.MAX_VALUE;
       /* Realizando Branch and Bound com pecas e melhor solucao */
       begin = now (); /* Tempo do sistema antes do BranchAndBound */
@@ -415,7 +401,6 @@ class RecorteDePecas {
       end = now(); /* Tempo do sistema apos BranchAndBound */
       System.out.println("Tempo de execução: " + (end - begin)/1000.0 + " /s");
       System.out.println("Melhor solução do problema usando Branch and Bound: " + solucao);
-      //digite enter para blotar
       gerarGrafico();
       
     }catch(IOException ex) {
