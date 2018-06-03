@@ -81,9 +81,10 @@ class RecorteDePecas {
   /**
    * Funcao para calcular desperdicio total presente no array de pecas
    * @param int [] x - Indice do arranjo com pecas
+   * @param int tamanho - é o tamanho do vetor.
    */
   
-  public static double calcularDesperdicio(int [] x,int tamanho) {
+  public static double calcularDesperdicioTotal(int [] x,int tamanho) {
     double parteSuperiorTemporaria = 0.0, parteInferiorTemporaria = 0.0;
     double desperdicio = 0.0;
     double x1,x2,x3;
@@ -154,7 +155,61 @@ class RecorteDePecas {
     }
     return desperdicio;
   }
-
+  /**
+   * Funcao para calcular desperdicio parcial presente no array de pecas
+   * @param int [] x - Indice do arranjo com pecas
+   * @param int tamanho - é o tamanho do vetor.
+   */
+  public static double calcularDesperdicioParcial(int [] x,int tamanho) {
+    double parteSuperiorTemporaria = 0.0, parteInferiorTemporaria = 0.0;
+    double desperdicio = 0.0;
+    double x1,x2,x3;
+    double ladoTriangulo1,ladoTriangulo2;
+    for(int i = 0; i < tamanho; i++) {
+      
+        x3 = trapezoidais[x[i]].getX3();
+        if(parteSuperiorTemporaria >= parteInferiorTemporaria) {
+          x3 = x3 * -1;
+          ladoTriangulo1 = calcularLado(parteSuperiorTemporaria);
+          ladoTriangulo2 = calcularLado(x3);
+          if(x3 <= parteSuperiorTemporaria) { 
+            desperdicio += calcularArea(ladoTriangulo1, ladoTriangulo2, parteSuperiorTemporaria - x3);
+          }else{
+            desperdicio += calcularArea(ladoTriangulo1, ladoTriangulo2, x3 - parteSuperiorTemporaria);
+          }
+        }else{
+          //System.out.println("entro");
+          ladoTriangulo1 = calcularLado(parteInferiorTemporaria);
+          ladoTriangulo2 = calcularLado(x3);
+          if(x3 <= parteInferiorTemporaria) { 
+            desperdicio += calcularArea(ladoTriangulo1,ladoTriangulo2,parteInferiorTemporaria - x3);
+          }else{
+            desperdicio += calcularArea(ladoTriangulo1,ladoTriangulo2,x3 - parteInferiorTemporaria);
+          }
+        }
+        x1 = trapezoidais[x[i]].getX1();
+        x2 = trapezoidais[x[i]].getX2();
+        x3 = trapezoidais[x[i]].getX3();
+        //System.out.println(x1 + " " + x2 + " " + x3);
+        if( x2 > 0 ) {
+          if(x2 > x1) {
+            parteSuperiorTemporaria = 0.0;
+            parteInferiorTemporaria = x2 - x1;
+          }else if(x2 < x1){
+            parteSuperiorTemporaria = x1 - x2;
+            parteInferiorTemporaria = 0.0;
+          }else{
+            parteSuperiorTemporaria = parteInferiorTemporaria = 0.0;
+          }
+        }else if(x2 < 0){
+         parteSuperiorTemporaria = x2 * (-1) + x1;  
+         parteInferiorTemporaria = 0.0;
+        }else{
+         parteSuperiorTemporaria = parteInferiorTemporaria = 0.0;
+        }
+    }
+    return desperdicio;
+  }
   /**
    * Funcao para realizar a permutacao de todas as possibiliades de arranjo de pecas
    * @param int n - tamanho do vetor x
@@ -165,7 +220,7 @@ class RecorteDePecas {
 
   public static void permutacao (int n , int [] x , boolean [] pass , int cont){
    if(n == cont) {
-     double desperdicio = calcularDesperdicio(x,cont);
+     double desperdicio = calcularDesperdicioTotal(x,cont);
      //System.out.println("Entro Permutacao");
      if(desperdicio <= solucao) { // So <, achar primeira solução, <= acha ultima
       solucao = desperdicio;
@@ -185,8 +240,7 @@ class RecorteDePecas {
   }
   
   /**
-   * Metodo que realiza o algoritmo de permutacao com uma alteracao usando um
-   *  algoritmo de branch and bound para realizar o calculo de desperdicio
+   * Metodo que realiza o algoritmo de permutacao com uma alteracao usando um algoritmo de branch and bound para realizar o calculo de desperdicio
    * @param int n - tamanho do vetor x
    * @param int [] x - Indices do arranjo de pecas que sera permutado
    * @param boolean [] pass - Posicoes que passaram na permutacao
@@ -197,7 +251,7 @@ class RecorteDePecas {
    double desperdicio = Double.MAX_VALUE;
    double desperdicioTemporario;
    if(n == cont) {
-     desperdicio = calcularDesperdicio(x,cont);
+     desperdicio = calcularDesperdicioTotal(x,cont);
      if(desperdicio <= solucao) { // So <, achar primeira solução, <= acha ultima
       //System.out.println("Entro Branch");
       solucao = desperdicio;
@@ -210,7 +264,7 @@ class RecorteDePecas {
            
            pass[i] = true;
            x[cont] = i;
-           desperdicioTemporario = calcularDesperdicio(x,cont+1);
+           desperdicioTemporario = calcularDesperdicioParcial(x,cont+1);
            if(desperdicioTemporario < desperdicio) {
             desperdicio = desperdicioTemporario;
             branchAndBound(n, x, pass, cont+1);
@@ -303,44 +357,6 @@ class RecorteDePecas {
       }
       g.drawLine(ultimaPosicaoInferior + parteSuperiorTemporaria, -50, ultimaPosicaoSuperior + parteInferiorTemporaria, 150, "RED", 0.003);
   }
-  
-  
-  /**
-   * Metodo que realiza o algoritmo de branch and bound para realizar o calculo de desperdicio
-   * @param int n - Tamanho do vetor de pecas
-   * @param int [] x - vetor de pecas
-   * @param boolean [] utilizada - posicoes do vetor de pecas utilizados
-   * @param int cont - contador de controle para o algoritmo
-   * @param double desperdicioTemporario - valor maximo para comparacao
-   */
-  
-  /*public static void branchAndBound(int n, int [] x, boolean [] utilizada, int cont, double desperdicioTemporario) {
-	  int aux = -1;
-	  if( n == cont ) {
-		solucao = calcularDesperdicio(x,cont);
-		for(int i = 0; i < vetorSolucao.length;i++) 
-			vetorSolucao[i] = x[i];
-	  }else{
-		for(int i = 0; i < n; i++) {
-			
-			if(utilizada[i] != true) {
-				int [] auxVector = new int [2];
-				auxVector[0] = x[cont - 1]; //Ultima peça
-				auxVector[1] = x[i]; // peça que a gente que colocar
-				double desperdicio = calcularDesperdicio(auxVector,2);
-				
-				if(desperdicioTemporario > desperdicio) {
-						desperdicioTemporario = desperdicio;
-						aux = i;
-				}
-			}
-		}	
-		utilizada[aux] = true;
-		x[cont] = aux;
-		branchAndBound(n,x,utilizada,cont + 1,Double.MAX_VALUE);
-      }
-  }*/
-
 
   /**
    * Funcao para retornar tempo do sistema
@@ -393,7 +409,7 @@ class RecorteDePecas {
       gerarGrafico();
       
       IO.pause("Aperte ENTER para solucao com Branch and Bound");
-      
+
       solucao = Double.MAX_VALUE;
       /* Realizando Branch and Bound com pecas e melhor solucao */
       begin = now (); /* Tempo do sistema antes do BranchAndBound */
@@ -401,6 +417,7 @@ class RecorteDePecas {
       end = now(); /* Tempo do sistema apos BranchAndBound */
       System.out.println("Tempo de execução: " + (end - begin)/1000.0 + " /s");
       System.out.println("Melhor solução do problema usando Branch and Bound: " + solucao);
+      //digite enter para blotar
       gerarGrafico();
       
     }catch(IOException ex) {
